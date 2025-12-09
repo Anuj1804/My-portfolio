@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portfolio</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+      z-index: 1000;
+      padding: 1.2rem 0;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #4a90e2;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #5a6c7d;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover {
+      color: #4a90e2;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-top: 80px;
+      padding: 3rem 2rem;
+    }
+
+    .section {
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      background: white;
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Hero/About Section */
+    .hero-section {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .profile-photo {
+      flex-shrink: 0;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: white;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .about-content {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .student-name {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      color: #4a90e2;
+      margin: 0 0 1.5rem 0;
+      font-weight: 500;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      color: #5a6c7d;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: #4a90e2;
+      color: white;
+      padding: 0.9rem 2.5rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+      cursor: pointer;
+      border: none;
+    }
+
+    .cta-button:hover {
+      background: #3a7bc8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+    }
+
+    /* Skills Section */
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin: 0 0 2rem 0;
+      text-align: center;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .skill-item {
+      background: #f8f9fb;
+      padding: 1.5rem;
+      border-radius: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .skill-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .skill-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .skill-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .skill-description {
+      font-size: 0.95rem;
+      color: #7f8c8d;
+      margin-top: 0.5rem;
+      line-height: 1.5;
+    }
+
+    /* Contact Section */
+    .contact-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: #f8f9fb;
+      border-radius: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-item:hover {
+      transform: translateX(5px);
+    }
+
+    .contact-icon {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .contact-details {
+      flex: 1;
+    }
+
+    .contact-label {
+      font-size: 0.85rem;
+      color: #7f8c8d;
+      margin: 0;
+    }
+
+    .contact-value {
+      font-size: 1.05rem;
+      color: #2c3e50;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-icon {
+      width: 45px;
+      height: 45px;
+      background: #f8f9fb;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .social-icon:hover {
+      background: #4a90e2;
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .form-input,
+    .form-textarea {
+      padding: 0.9rem;
+      border: 2px solid #e1e8ed;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+      background: #f8f9fb;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #4a90e2;
+      background: white;
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-button {
+      background: #4a90e2;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    }
+
+    .submit-button:hover {
+      background: #3a7bc8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 0 1rem;
+      }
+
+      .nav-links {
+        gap: 1.5rem;
+      }
+
+      .section {
+        padding: 2rem 1.5rem;
+      }
+
+      .hero-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .profile-photo {
+        width: 150px;
+        height: 150px;
+        font-size: 3rem;
+      }
+
+      .student-name {
+        font-size: 2rem;
+      }
+
+      .tagline {
+        font-size: 1rem;
+      }
+
+      .section-title {
+        font-size: 1.6rem;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Form submission success message */
+    .success-message {
+      background: #d4edda;
+      color: #155724;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+      display: none;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- Navigation Bar -->
+  <nav class="navbar">
+   <div class="nav-container">
+    <div class="nav-logo">
+     Portfolio
+    </div>
+    <ul class="nav-links">
+     <li><a id="nav-home">Home</a></li>
+     <li><a id="nav-about">About</a></li>
+     <li><a id="nav-skills">Skills</a></li>
+     <li><a id="nav-contact">Contact</a></li>
+    </ul>
+   </div>
+  </nav><!-- Main Content -->
+  <main class="main-content"><!-- Hero/About Section -->
+   <section id="about" class="section">
+    <div class="hero-section">
+     <div class="profile-photo">
+      👤
+     </div>
+     <div class="about-content">
+      <h1 class="student-name" id="student-name">ANUJ GUPTA</h1>
+      <p class="tagline" id="tagline">Aspiring Software Developer | Tech Enthusiast</p>
+      <p class="about-text" id="about-text">I am a B.Tech 1st year CSIT student from KEIT College, passionate about technology and software development. Currently exploring web development, programming fundamentals, and data structures. I enjoy solving coding challenges and building projects that combine creativity with technical skills. Eager to learn new technologies and collaborate on innovative solutions.</p><a class="cta-button" id="cta-contact">Contact me</a>
+     </div>
+    </div>
+   </section><!-- Skills Section -->
+   <section id="skills" class="section">
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="skills-grid">
+     <div class="skill-item">
+      <div class="skill-header">
+       <div class="skill-icon">
+        H
+       </div>
+       <div class="skill-name">
+        HTML
+       </div>
+      </div>
+      <p class="skill-description">Building structured and semantic web pages with modern HTML5 standards</p>
+     </div>
+     <div class="skill-item">
+      <div class="skill-header">
+       <div class="skill-icon">
+        C
+       </div>
+       <div class="skill-name">
+        CSS
+       </div>
+      </div>
+      <p class="skill-description">Styling responsive layouts and creating beautiful user interfaces</p>
+     </div>
+     <div class="skill-item">
+      <div class="skill-header">
+       <div class="skill-icon">
+        C
+       </div>
+       <div class="skill-name">
+        C Language
+       </div>
+      </div>
+      <p class="skill-description">Understanding core programming concepts and memory management</p>
+     </div>
+     <div class="skill-item">
+      <div class="skill-header">
+       <div class="skill-icon">
+        C++
+       </div>
+       <div class="skill-name">
+        C++
+       </div>
+      </div>
+      <p class="skill-description">Object-oriented programming and data structure implementation</p>
+     </div>
+     <div class="skill-item">
+      <div class="skill-header">
+       <div class="skill-icon">
+        💻
+       </div>
+       <div class="skill-name">
+        Programming
+       </div>
+      </div>
+      <p class="skill-description">Problem-solving and algorithmic thinking for software development</p>
+     </div>
+    </div>
+   </section><!-- Contact Section -->
+   <section id="contact" class="section">
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-content">
+     <div class="contact-info">
+      <div class="contact-item">
+       <div class="contact-icon">
+        📧
+       </div>
+       <div class="contact-details">
+        <p class="contact-label">Email</p>
+        <p class="contact-value" id="email-display">guptaanuj18april@gmail.com</p>
+       </div>
+      </div>
+      <div class="contact-item">
+       <div class="contact-icon">
+        📱
+       </div>
+       <div class="contact-details">
+        <p class="contact-label">Phone</p>
+        <p class="contact-value" id="phone-display">+91 7380974467</p>
+       </div>
+      </div>
+      <div class="social-links"><a href="#" class="social-icon" title="LinkedIn">💼</a> <a href="https://github.com/Anuj1804" class="social-icon" title="GitHub">🐙</a> <a href="#" class="social-icon" title="Twitter">🐦</a>
+      </div>
+     </div>
+     <div class="contact-form">
+      <form id="contact-form">
+       <div class="form-group"><label class="form-label" for="form-name">Name</label> <input type="text" id="form-name" class="form-input" placeholder="Your name" required>
+       </div>
+       <div class="form-group"><label class="form-label" for="form-email">Email</label> <input type="email" id="form-email" class="form-input" placeholder="your.email@example.com" required>
+       </div>
+       <div class="form-group"><label class="form-label" for="form-message">Message</label> <textarea id="form-message" class="form-textarea" placeholder="Your message..." required></textarea>
+       </div><button type="submit" class="submit-button">Send Message</button>
+       <div class="success-message" id="success-message">
+        ✓ Message sent successfully! I'll get back to you soon.
+       </div>
+      </form>
+     </div>
+    </div>
+   </section>
+  </main>
+  <script>
+    const defaultConfig = {
+      background_color: '#f5f7fa',
+      surface_color: '#ffffff',
+      text_color: '#2c3e50',
+      primary_action_color: '#4a90e2',
+      secondary_action_color: '#5a6c7d',
+      font_family: 'Inter',
+      font_size: 16,
+      student_name: 'Your Name',
+      tagline: 'Aspiring Software Developer | Tech Enthusiast',
+      about_text: 'I am a B.Tech 1st year CSIT student from KEIT College, passionate about technology and software development. Currently exploring web development, programming fundamentals, and data structures. I enjoy solving coding challenges and building projects that combine creativity with technical skills. Eager to learn new technologies and collaborate on innovative solutions.',
+      email_address: 'student@example.com',
+      phone_number: '+91 XXXXX XXXXX'
+    };
+
+    async function onConfigChange(config) {
+      const studentName = config.student_name || defaultConfig.student_name;
+      const tagline = config.tagline || defaultConfig.tagline;
+      const aboutText = config.about_text || defaultConfig.about_text;
+      const emailAddress = config.email_address || defaultConfig.email_address;
+      const phoneNumber = config.phone_number || defaultConfig.phone_number;
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+      const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      const fontSize = config.font_size || defaultConfig.font_size;
+
+      document.getElementById('student-name').textContent = studentName;
+      document.getElementById('tagline').textContent = tagline;
+      document.getElementById('about-text').textContent = aboutText;
+      document.getElementById('email-display').textContent = emailAddress;
+      document.getElementById('phone-display').textContent = phoneNumber;
+
+      document.body.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${adjustColor(backgroundColor, -10)} 100%)`;
+      document.body.style.color = textColor;
+      document.body.style.fontFamily = `${fontFamily}, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif`;
+
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(section => {
+        section.style.backgroundColor = surfaceColor;
+      });
+
+      const navbar = document.querySelector('.navbar');
+      navbar.style.backgroundColor = `rgba(${hexToRgb(surfaceColor)}, 0.95)`;
+
+      const allText = document.querySelectorAll('.student-name, .section-title, .skill-name, .contact-value, .form-label');
+      allText.forEach(el => {
+        el.style.color = textColor;
+      });
+
+      const secondaryText = document.querySelectorAll('.tagline, .about-text, .contact-label, .nav-links a');
+      secondaryText.forEach(el => {
+        el.style.color = secondaryActionColor;
+      });
+
+      const primaryButtons = document.querySelectorAll('.cta-button, .submit-button');
+      primaryButtons.forEach(btn => {
+        btn.style.backgroundColor = primaryActionColor;
+        btn.style.boxShadow = `0 4px 15px ${primaryActionColor}4D`;
+      });
+
+      const icons = document.querySelectorAll('.skill-icon, .contact-icon');
+      icons.forEach(icon => {
+        icon.style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${adjustColor(primaryActionColor, -15)} 100%)`;
+      });
+
+
+
+      const baseFontSize = fontSize;
+      document.querySelector('.student-name').style.fontSize = `${baseFontSize * 1.56}px`;
+      document.querySelector('.tagline').style.fontSize = `${baseFontSize * 0.75}px`;
+      document.querySelector('.about-text').style.fontSize = `${baseFontSize * 0.69}px`;
+      document.querySelectorAll('.section-title').forEach(el => el.style.fontSize = `${baseFontSize * 1.25}px`);
+      document.querySelectorAll('.nav-links a').forEach(el => el.style.fontSize = `${baseFontSize}px`);
+      document.querySelectorAll('.skill-name').forEach(el => el.style.fontSize = `${baseFontSize * 0.69}px`);
+      document.querySelectorAll('.contact-value').forEach(el => el.style.fontSize = `${baseFontSize * 0.66}px`);
+      document.querySelectorAll('.form-label').forEach(el => el.style.fontSize = `${baseFontSize * 0.59}px`);
+    }
+
+    function hexToRgb(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '255, 255, 255';
+    }
+
+    function adjustColor(hex, percent) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = Math.max(0, Math.min(255, (num >> 16) + amt));
+      const G = Math.max(0, Math.min(255, (num >> 8 & 0x00FF) + amt));
+      const B = Math.max(0, Math.min(255, (num & 0x0000FF) + amt));
+      return `#${(0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1)}`;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.primary_action_color || defaultConfig.primary_action_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            if (window.elementSdk) {
+              window.elementSdk.config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            if (window.elementSdk) {
+              window.elementSdk.config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['student_name', config.student_name || defaultConfig.student_name],
+        ['tagline', config.tagline || defaultConfig.tagline],
+        ['about_text', config.about_text || defaultConfig.about_text],
+        ['email_address', config.email_address || defaultConfig.email_address],
+        ['phone_number', config.phone_number || defaultConfig.phone_number]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    document.getElementById('nav-home').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('nav-about').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('nav-skills').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('skills').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('nav-contact').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('cta-contact').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const successMessage = document.getElementById('success-message');
+      successMessage.classList.add('show');
+      e.target.reset();
+      
+      setTimeout(() => {
+        successMessage.classList.remove('show');
+      }, 5000);
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a837dfe35ff54de',t:'MTc2NDc2OTM5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
